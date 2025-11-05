@@ -26,5 +26,6 @@ black==23.12.1
 flake8==7.0.0
 isort==5.13.2
 bandit==1.7.5
-safety==2.3.5
+# Bump safety to avoid conflict with packaging (required by pytest/apispec/black)
+safety>=3.0.0
 requests==2.31.0
