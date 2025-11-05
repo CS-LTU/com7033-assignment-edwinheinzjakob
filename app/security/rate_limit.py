@@ -2,8 +2,8 @@
 Rate limiting decorators and utilities
 """
 
-import logging
 from functools import wraps
+import logging
 
 from flask import jsonify, request
 from flask_limiter import Limiter

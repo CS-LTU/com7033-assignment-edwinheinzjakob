@@ -2,9 +2,9 @@
 User repository for SQLite database operations
 """
 
+from datetime import datetime
 import logging
 import sqlite3
-from datetime import datetime
 from typing import Dict, Optional
 
 from flask_login import UserMixin

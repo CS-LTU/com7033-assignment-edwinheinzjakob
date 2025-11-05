@@ -5,7 +5,6 @@ Main application factory
 
 import logging
 
-import sentry_sdk
 from flask import Flask
 from flask_limiter import Limiter
 from flask_limiter.util import get_remote_address
@@ -13,6 +12,7 @@ from flask_login import LoginManager
 from flask_talisman import Talisman
 from flask_wtf.csrf import CSRFProtect
 from pythonjsonlogger import jsonlogger
+import sentry_sdk
 from sentry_sdk.integrations.flask import FlaskIntegration
 
 from app.repositories.user_repository import UserRepository
@@ -67,8 +67,7 @@ def create_app(config_name="development"):
     from app.blueprints.auth.routes import init_limiter as init_auth_limiter
 
     init_auth_limiter(app)
-    from app.blueprints.patients.routes import \
-        init_limiter as init_patients_limiter
+    from app.blueprints.patients.routes import init_limiter as init_patients_limiter
 
     init_patients_limiter(app)
     from app.blueprints.api.v1.routes import init_limiter as init_api_limiter

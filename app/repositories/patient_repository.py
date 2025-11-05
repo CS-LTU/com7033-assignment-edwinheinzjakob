@@ -2,8 +2,8 @@
 Patient repository for MongoDB operations
 """
 
-import logging
 from datetime import datetime
+import logging
 from typing import Any, Dict, List, Optional
 
 from bson.objectid import ObjectId

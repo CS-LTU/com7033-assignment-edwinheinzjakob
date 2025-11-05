@@ -5,9 +5,13 @@ Unit tests for security functions
 import pytest
 
 from app.security.password import password_service
-from app.security.validation import (sanitize_input, validate_email,
-                                     validate_password_strength,
-                                     validate_patient_data, validate_username)
+from app.security.validation import (
+    sanitize_input,
+    validate_email,
+    validate_password_strength,
+    validate_patient_data,
+    validate_username,
+)
 
 
 class TestEmailValidation:

@@ -5,9 +5,9 @@ API v1 routes
 from datetime import datetime, timedelta
 from functools import wraps
 
-import jwt
 from flask import jsonify, request
 from flask_login import current_user, login_required
+import jwt
 
 from app.blueprints.api.v1 import api_bp
 from app.repositories.patient_repository import PatientRepository
