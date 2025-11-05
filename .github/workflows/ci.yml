@@ -22,7 +22,7 @@ jobs:
       - name: Run black
         run: black --check app/ tests/
       - name: Run isort
-        run: isort --check-only app/ tests/
+        run: isort --check-only --profile black --known-first-party app,tests app/ tests/
       - name: Run flake8
         run: flake8 app/ tests/ --max-line-length=100 --exclude=__pycache__,venv
       - name: Run bandit
