@@ -6,12 +6,10 @@ from datetime import datetime, timedelta
 from functools import wraps
 
 from flask import jsonify, request
-from flask_login import current_user, login_required
 import jwt
 
 from app.blueprints.api.v1 import api_bp
 from app.repositories.patient_repository import PatientRepository
-from app.security.rate_limit import rate_limit_api
 from app.services.patient_service import PatientService
 
 # Initialize services
@@ -50,7 +48,7 @@ def jwt_required(f):
             request.current_username = payload["username"]
         except jwt.ExpiredSignatureError:
             return jsonify({"error": "Token has expired"}), 401
-        except (jwt.InvalidTokenError, Exception) as e:
+        except (jwt.InvalidTokenError, Exception):
             return jsonify({"error": "Invalid token"}), 401
 
         return f(*args, **kwargs)

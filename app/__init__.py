@@ -2,21 +2,17 @@
 Secure Stroke Prediction Dataset Management System
 Main application factory
 """
-
-import logging
-
 from flask import Flask
 from flask_limiter import Limiter
 from flask_limiter.util import get_remote_address
 from flask_login import LoginManager
 from flask_talisman import Talisman
 from flask_wtf.csrf import CSRFProtect
-from pythonjsonlogger import jsonlogger
 import sentry_sdk
 from sentry_sdk.integrations.flask import FlaskIntegration
 
 from app.repositories.user_repository import UserRepository
-from app.security.encryption import EncryptionService, init_encryption_service
+from app.security.encryption import init_encryption_service
 from app.utils.logging_config import setup_logging
 from config import config
 
@@ -49,7 +45,13 @@ def create_app(config_name="development"):
     # Initialize Talisman with security headers
     csp_policy = app.config.get("SECURITY_HEADERS", {}).get(
         "Content-Security-Policy",
-        "default-src 'self'; script-src 'self' 'unsafe-inline' https://cdn.jsdelivr.net https://cdnjs.cloudflare.com; style-src 'self' 'unsafe-inline' https://cdn.jsdelivr.net https://cdnjs.cloudflare.com;",
+        (
+            "default-src 'self'; "
+            "script-src 'self' 'unsafe-inline' https://cdn.jsdelivr.net "
+            "https://cdnjs.cloudflare.com; "
+            "style-src 'self' 'unsafe-inline' https://cdn.jsdelivr.net "
+            "https://cdnjs.cloudflare.com;"
+        ),
     )
 
     talisman.init_app(

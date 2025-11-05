@@ -2,10 +2,8 @@
 Integration tests for authentication
 """
 
-import pytest
 
 from app.repositories.user_repository import UserRepository
-from app.security.password import password_service
 from app.services.auth_service import AuthService
 
 

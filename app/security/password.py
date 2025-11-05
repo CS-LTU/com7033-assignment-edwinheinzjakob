@@ -4,7 +4,6 @@ Password hashing and verification using Argon2
 
 import logging
 
-import argon2
 from argon2 import PasswordHasher
 from argon2.exceptions import InvalidHashError, VerifyMismatchError
 

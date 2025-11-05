@@ -6,7 +6,6 @@ from datetime import datetime, timedelta
 import logging
 
 from flask import request
-from flask_login import login_user
 
 from app.repositories.user_repository import User, UserRepository
 from app.security.password import password_service
@@ -38,7 +37,10 @@ class AuthService:
         if not validate_username(username):
             return (
                 False,
-                "Username must be 3-20 characters long and contain only letters, numbers, and underscores.",
+                (
+                    "Username must be 3-20 characters long and contain only letters, "
+                    "numbers, and underscores."
+                ),
                 None,
             )
 

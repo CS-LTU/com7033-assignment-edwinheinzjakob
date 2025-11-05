@@ -3,13 +3,11 @@ Pytest configuration and fixtures
 """
 
 import os
-import shutil
 import tempfile
 
 import pytest
 
 from app import create_app
-from app.repositories.patient_repository import PatientRepository
 from app.repositories.user_repository import UserRepository
 from app.security.password import password_service
 
@@ -26,7 +24,7 @@ def app():
 
     with app.app_context():
         # Initialize databases
-        user_repo = UserRepository(db_path)
+        UserRepository(db_path)
         yield app
 
     # Cleanup
@@ -52,9 +50,7 @@ def auth_headers(client):
     # Register test user
     user_repo = UserRepository()
     password_hash = password_service.hash_password("testpass123")
-    user_id = user_repo.create_user(
-        "testuser", "test@example.com", password_hash, "admin"
-    )
+    user_repo.create_user("testuser", "test@example.com", password_hash, "admin")
 
     # Login via API
     response = client.post(

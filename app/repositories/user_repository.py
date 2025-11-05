@@ -136,7 +136,7 @@ class UserRepository:
             conn.close()
             logger.info(f"User created: {username} with role {role}")
             return user_id
-        except sqlite3.IntegrityError as e:
+        except sqlite3.IntegrityError:
             logger.warning(f"User creation failed - duplicate entry: {username}")
             raise
         except Exception as e:
@@ -216,7 +216,10 @@ class UserRepository:
             conn = self.get_connection()
             cursor = conn.cursor()
             cursor.execute(
-                "UPDATE users SET failed_login_attempts = failed_login_attempts + 1 WHERE username = ?",
+                (
+                    "UPDATE users SET failed_login_attempts = failed_login_attempts + 1 "
+                    "WHERE username = ?"
+                ),
                 (username,),
             )
             conn.commit()

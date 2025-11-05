@@ -132,7 +132,7 @@ class PatientService:
             if "email" in patient and patient["email"]:
                 try:
                     patient["email"] = encryption_service.decrypt(patient["email"])
-                except:
+                except Exception:
                     pass
         return patient
 
@@ -148,7 +148,7 @@ class PatientService:
                 if "email" in patient and patient["email"]:
                     try:
                         patient["email"] = encryption_service.decrypt(patient["email"])
-                    except:
+                    except Exception:
                         pass
 
         return patients, total
@@ -163,7 +163,7 @@ class PatientService:
                 if "email" in patient and patient["email"]:
                     try:
                         patient["email"] = encryption_service.decrypt(patient["email"])
-                    except:
+                    except Exception:
                         pass
 
         return results

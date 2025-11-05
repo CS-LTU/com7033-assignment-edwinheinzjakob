@@ -2,7 +2,6 @@
 Unit tests for security functions
 """
 
-import pytest
 
 from app.security.password import password_service
 from app.security.validation import (

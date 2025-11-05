@@ -2,7 +2,6 @@
 Field-level encryption for sensitive data in MongoDB
 """
 
-import base64
 import logging
 import os
 
