@@ -2,18 +2,17 @@
 Authentication service
 """
 
+import logging
 from datetime import datetime, timedelta
+
 from flask import request
 from flask_login import login_user
-import logging
 
-from app.repositories.user_repository import UserRepository, User
+from app.repositories.user_repository import User, UserRepository
 from app.security.password import password_service
-from app.security.validation import (
-    validate_email,
-    validate_username,
-    validate_password_strength,
-)
+from app.security.validation import (validate_email,
+                                     validate_password_strength,
+                                     validate_username)
 
 logger = logging.getLogger(__name__)
 

@@ -3,21 +3,22 @@ Secure Stroke Prediction Dataset Management System
 Main application factory
 """
 
+import logging
+
+import sentry_sdk
 from flask import Flask
-from flask_wtf.csrf import CSRFProtect
 from flask_limiter import Limiter
 from flask_limiter.util import get_remote_address
-from flask_talisman import Talisman
 from flask_login import LoginManager
-import logging
+from flask_talisman import Talisman
+from flask_wtf.csrf import CSRFProtect
 from pythonjsonlogger import jsonlogger
-import sentry_sdk
 from sentry_sdk.integrations.flask import FlaskIntegration
 
-from config import config
 from app.repositories.user_repository import UserRepository
 from app.security.encryption import EncryptionService, init_encryption_service
 from app.utils.logging_config import setup_logging
+from config import config
 
 # Initialize extensions
 csrf = CSRFProtect()
@@ -66,7 +67,8 @@ def create_app(config_name="development"):
     from app.blueprints.auth.routes import init_limiter as init_auth_limiter
 
     init_auth_limiter(app)
-    from app.blueprints.patients.routes import init_limiter as init_patients_limiter
+    from app.blueprints.patients.routes import \
+        init_limiter as init_patients_limiter
 
     init_patients_limiter(app)
     from app.blueprints.api.v1.routes import init_limiter as init_api_limiter
@@ -108,8 +110,8 @@ def create_app(config_name="development"):
 
     # Register blueprints
     from app.blueprints.auth import auth_bp
-    from app.blueprints.patients import patients_bp
     from app.blueprints.dashboard import dashboard_bp
+    from app.blueprints.patients import patients_bp
 
     app.register_blueprint(auth_bp, url_prefix="/auth")
     app.register_blueprint(patients_bp, url_prefix="/patients")

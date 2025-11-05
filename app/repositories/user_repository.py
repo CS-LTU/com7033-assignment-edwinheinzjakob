@@ -2,10 +2,11 @@
 User repository for SQLite database operations
 """
 
+import logging
 import sqlite3
 from datetime import datetime
-from typing import Optional, Dict
-import logging
+from typing import Dict, Optional
+
 from flask_login import UserMixin
 
 logger = logging.getLogger(__name__)

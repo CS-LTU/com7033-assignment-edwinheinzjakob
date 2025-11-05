@@ -2,12 +2,13 @@
 Authentication routes
 """
 
-from flask import render_template, request, redirect, url_for, flash, session
-from flask_login import login_user, logout_user, login_required, current_user
+from flask import flash, redirect, render_template, request, session, url_for
+from flask_login import current_user, login_required, login_user, logout_user
+
 from app.blueprints.auth import auth_bp
 from app.repositories.user_repository import UserRepository
-from app.services.auth_service import AuthService
 from app.security.validation import sanitize_input
+from app.services.auth_service import AuthService
 
 # Initialize services
 user_repo = UserRepository()

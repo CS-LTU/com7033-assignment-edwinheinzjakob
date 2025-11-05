@@ -2,11 +2,12 @@
 Patient repository for MongoDB operations
 """
 
-from pymongo import MongoClient
-from datetime import datetime
-from typing import List, Dict, Optional, Any
-from bson.objectid import ObjectId
 import logging
+from datetime import datetime
+from typing import Any, Dict, List, Optional
+
+from bson.objectid import ObjectId
+from pymongo import MongoClient
 
 logger = logging.getLogger(__name__)
 

@@ -3,6 +3,7 @@ End-to-end tests for web application
 """
 
 import pytest
+
 from app import create_app
 
 

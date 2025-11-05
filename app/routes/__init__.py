@@ -5,7 +5,7 @@ Root routes
 
 def register_routes(app):
     """Register root-level routes"""
-    from flask import render_template, redirect, url_for
+    from flask import redirect, render_template, url_for
     from flask_login import current_user
 
     @app.route("/")

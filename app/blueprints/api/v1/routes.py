@@ -2,15 +2,17 @@
 API v1 routes
 """
 
-from flask import request, jsonify
-from flask_login import login_required, current_user
-from app.blueprints.api.v1 import api_bp
-from app.repositories.patient_repository import PatientRepository
-from app.services.patient_service import PatientService
-from app.security.rate_limit import rate_limit_api
-import jwt
 from datetime import datetime, timedelta
 from functools import wraps
+
+import jwt
+from flask import jsonify, request
+from flask_login import current_user, login_required
+
+from app.blueprints.api.v1 import api_bp
+from app.repositories.patient_repository import PatientRepository
+from app.security.rate_limit import rate_limit_api
+from app.services.patient_service import PatientService
 
 # Initialize services
 patient_repo = PatientRepository()
@@ -59,9 +61,10 @@ def jwt_required(f):
 @api_bp.route("/auth/login", methods=["POST"])
 def api_login():
     """API login endpoint - returns JWT token"""
+    from flask import current_app
+
     from app.repositories.user_repository import UserRepository
     from app.services.auth_service import AuthService
-    from flask import current_app
 
     user_repo = UserRepository()
     auth_service = AuthService(user_repo)

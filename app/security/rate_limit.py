@@ -2,12 +2,13 @@
 Rate limiting decorators and utilities
 """
 
+import logging
 from functools import wraps
-from flask import request, jsonify
-from flask_login import current_user
+
+from flask import jsonify, request
 from flask_limiter import Limiter
 from flask_limiter.util import get_remote_address
-import logging
+from flask_login import current_user
 
 logger = logging.getLogger(__name__)
 

@@ -2,13 +2,15 @@
 Pytest configuration and fixtures
 """
 
-import pytest
 import os
-import tempfile
 import shutil
+import tempfile
+
+import pytest
+
 from app import create_app
-from app.repositories.user_repository import UserRepository
 from app.repositories.patient_repository import PatientRepository
+from app.repositories.user_repository import UserRepository
 from app.security.password import password_service
 
 

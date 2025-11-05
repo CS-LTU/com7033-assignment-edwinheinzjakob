@@ -2,10 +2,11 @@
 Field-level encryption for sensitive data in MongoDB
 """
 
-from cryptography.fernet import Fernet
 import base64
-import os
 import logging
+import os
+
+from cryptography.fernet import Fernet
 
 logger = logging.getLogger(__name__)
 

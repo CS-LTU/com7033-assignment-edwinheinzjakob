@@ -4,6 +4,7 @@ Dashboard routes
 
 from flask import render_template
 from flask_login import login_required
+
 from app.blueprints.dashboard import dashboard_bp
 from app.repositories.patient_repository import PatientRepository
 

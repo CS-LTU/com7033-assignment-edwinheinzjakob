@@ -4,6 +4,7 @@ Logging configuration with structured JSON logging
 
 import logging
 import sys
+
 from pythonjsonlogger import jsonlogger
 
 

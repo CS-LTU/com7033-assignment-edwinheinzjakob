@@ -2,10 +2,11 @@
 Password hashing and verification using Argon2
 """
 
+import logging
+
 import argon2
 from argon2 import PasswordHasher
-from argon2.exceptions import VerifyMismatchError, InvalidHashError
-import logging
+from argon2.exceptions import InvalidHashError, VerifyMismatchError
 
 logger = logging.getLogger(__name__)
 

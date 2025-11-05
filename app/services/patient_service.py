@@ -2,12 +2,12 @@
 Patient service for business logic
 """
 
-from typing import List, Dict, Optional, Any
 import logging
+from typing import Any, Dict, List, Optional
 
 from app.repositories.patient_repository import PatientRepository
-from app.security.validation import validate_patient_data, sanitize_input
 from app.security.encryption import encryption_service
+from app.security.validation import sanitize_input, validate_patient_data
 
 logger = logging.getLogger(__name__)
 
