@@ -1,0 +1,72 @@
+{% extends "base.html" %}
+
+{% block title %}Home - Stroke Prediction System{% endblock %}
+
+{% block content %}
+<div class="row justify-content-center">
+    <div class="col-md-8">
+        <div class="card shadow">
+            <div class="card-body text-center py-5">
+                <i class="fas fa-heartbeat fa-4x text-primary mb-4"></i>
+                <h1 class="display-4 mb-4">Welcome to Stroke Prediction System</h1>
+                <p class="lead text-muted mb-5">
+                    A secure web application for managing stroke prediction patient data.
+                    Help healthcare professionals record, manage, and analyze patient information
+                    to predict stroke likelihood and assist in preventive healthcare.
+                </p>
+                
+                {% if not current_user.is_authenticated %}
+                <div class="d-grid gap-2 d-md-flex justify-content-md-center">
+                    <a href="{{ url_for('auth.register') }}" class="btn btn-primary btn-lg me-md-2">
+                        <i class="fas fa-user-plus me-2"></i>Get Started
+                    </a>
+                    <a href="{{ url_for('auth.login') }}" class="btn btn-outline-primary btn-lg">
+                        <i class="fas fa-sign-in-alt me-2"></i>Login
+                    </a>
+                </div>
+                {% else %}
+                <div class="d-grid gap-2 d-md-flex justify-content-md-center">
+                    <a href="{{ url_for('dashboard.index') }}" class="btn btn-primary btn-lg me-md-2">
+                        <i class="fas fa-tachometer-alt me-2"></i>Go to Dashboard
+                    </a>
+                    <a href="{{ url_for('patients.list_patients') }}" class="btn btn-outline-primary btn-lg">
+                        <i class="fas fa-users me-2"></i>View Patients
+                    </a>
+                </div>
+                {% endif %}
+            </div>
+        </div>
+
+        <div class="row mt-5">
+            <div class="col-md-4 mb-4">
+                <div class="card h-100">
+                    <div class="card-body text-center">
+                        <i class="fas fa-shield-alt fa-3x text-success mb-3"></i>
+                        <h5 class="card-title">Secure</h5>
+                        <p class="card-text">Enterprise-grade security with encryption, rate limiting, and comprehensive validation.</p>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-4 mb-4">
+                <div class="card h-100">
+                    <div class="card-body text-center">
+                        <i class="fas fa-database fa-3x text-info mb-3"></i>
+                        <h5 class="card-title">Reliable</h5>
+                        <p class="card-text">Dual database system with SQLite for authentication and MongoDB for patient records.</p>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-4 mb-4">
+                <div class="card h-100">
+                    <div class="card-body text-center">
+                        <i class="fas fa-chart-line fa-3x text-warning mb-3"></i>
+                        <h5 class="card-title">Analytics</h5>
+                        <p class="card-text">Comprehensive dashboard with statistics and insights for healthcare professionals.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
+

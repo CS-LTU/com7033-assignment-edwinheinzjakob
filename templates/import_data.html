@@ -1,0 +1,66 @@
+{% extends "base.html" %}
+
+{% block title %}Import Data - Stroke Prediction System{% endblock %}
+
+{% block content %}
+<div class="row justify-content-center">
+    <div class="col-md-8">
+        <div class="card shadow">
+            <div class="card-header bg-success text-white">
+                <h4 class="mb-0"><i class="fas fa-file-upload me-2"></i>Import CSV Data</h4>
+            </div>
+            <div class="card-body">
+                <div class="alert alert-info">
+                    <i class="fas fa-info-circle me-2"></i>
+                    <strong>Instructions:</strong> Upload a CSV file containing patient data. The file should have columns:
+                    id, gender, age, hypertension, heart_disease, ever_married, work_type, Residence_type, 
+                    avg_glucose_level, bmi, smoking_status, stroke
+                </div>
+
+                <form method="POST" action="{{ url_for('patients.import_data') }}" enctype="multipart/form-data">
+                    <input type="hidden" name="csrf_token" value="{{ csrf_token() }}"/>
+                    
+                    <div class="mb-3">
+                        <label for="file" class="form-label">Select CSV File <span class="text-danger">*</span></label>
+                        <input type="file" class="form-control" id="file" name="file" accept=".csv" required>
+                        <small class="form-text text-muted">Only CSV files are allowed. Maximum file size: 16MB</small>
+                    </div>
+
+                    <div class="d-flex justify-content-between">
+                        <a href="{{ url_for('patients.list_patients') }}" class="btn btn-secondary">
+                            <i class="fas fa-times me-1"></i>Cancel
+                        </a>
+                        <button type="submit" class="btn btn-success">
+                            <i class="fas fa-upload me-1"></i>Import Data
+                        </button>
+                    </div>
+                </form>
+            </div>
+        </div>
+
+        <div class="card mt-4">
+            <div class="card-header">
+                <h5 class="mb-0"><i class="fas fa-question-circle me-2"></i>CSV Format Requirements</h5>
+            </div>
+            <div class="card-body">
+                <p>The CSV file must contain the following columns (in any order):</p>
+                <ul>
+                    <li><strong>id</strong> - Unique patient identifier (integer)</li>
+                    <li><strong>gender</strong> - Male, Female, or Other</li>
+                    <li><strong>age</strong> - Patient age (0-120)</li>
+                    <li><strong>hypertension</strong> - 0 or 1</li>
+                    <li><strong>heart_disease</strong> - 0 or 1</li>
+                    <li><strong>ever_married</strong> - Yes or No</li>
+                    <li><strong>work_type</strong> - Children, Govt_job, Never_worked, Private, or Self-employed</li>
+                    <li><strong>Residence_type</strong> - Rural or Urban</li>
+                    <li><strong>avg_glucose_level</strong> - Average glucose level (0-500)</li>
+                    <li><strong>bmi</strong> - Body Mass Index (0-100)</li>
+                    <li><strong>smoking_status</strong> - formerly smoked, never smoked, smokes, or Unknown</li>
+                    <li><strong>stroke</strong> - 0 or 1</li>
+                </ul>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
+

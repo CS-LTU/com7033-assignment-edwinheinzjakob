@@ -1,0 +1,144 @@
+{% extends "base.html" %}
+
+{% block title %}Dashboard - Stroke Prediction System{% endblock %}
+
+{% block content %}
+<div class="d-flex justify-content-between align-items-center mb-4">
+    <h2><i class="fas fa-tachometer-alt me-2"></i>Dashboard</h2>
+    <div>
+        <a href="{{ url_for('patients.add_patient') }}" class="btn btn-primary">
+            <i class="fas fa-plus me-1"></i>Add Patient
+        </a>
+        <a href="{{ url_for('patients.import_data') }}" class="btn btn-outline-primary">
+            <i class="fas fa-file-upload me-1"></i>Import Data
+        </a>
+    </div>
+</div>
+
+<div class="row mb-4">
+    <div class="col-md-3 mb-3">
+        <div class="card text-white bg-primary">
+            <div class="card-body">
+                <div class="d-flex justify-content-between align-items-center">
+                    <div>
+                        <h6 class="card-title text-uppercase mb-2">Total Patients</h6>
+                        <h2 class="mb-0">{{ total_patients|default(0) }}</h2>
+                    </div>
+                    <i class="fas fa-users fa-3x opacity-50"></i>
+                </div>
+            </div>
+            <div class="card-footer">
+                <a href="{{ url_for('patients.list_patients') }}" class="text-white text-decoration-none">
+                    View all <i class="fas fa-arrow-right ms-1"></i>
+                </a>
+            </div>
+        </div>
+    </div>
+
+    <div class="col-md-3 mb-3">
+        <div class="card text-white bg-danger">
+            <div class="card-body">
+                <div class="d-flex justify-content-between align-items-center">
+                    <div>
+                        <h6 class="card-title text-uppercase mb-2">Stroke Patients</h6>
+                        <h2 class="mb-0">{{ stroke_patients|default(0) }}</h2>
+                    </div>
+                    <i class="fas fa-heartbeat fa-3x opacity-50"></i>
+                </div>
+            </div>
+            <div class="card-footer">
+                <small>High risk patients</small>
+            </div>
+        </div>
+    </div>
+
+    <div class="col-md-3 mb-3">
+        <div class="card text-white bg-info">
+            <div class="card-body">
+                <div class="d-flex justify-content-between align-items-center">
+                    <div>
+                        <h6 class="card-title text-uppercase mb-2">Male Patients</h6>
+                        <h2 class="mb-0">{{ male_count|default(0) }}</h2>
+                    </div>
+                    <i class="fas fa-male fa-3x opacity-50"></i>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="col-md-3 mb-3">
+        <div class="card text-white bg-success">
+            <div class="card-body">
+                <div class="d-flex justify-content-between align-items-center">
+                    <div>
+                        <h6 class="card-title text-uppercase mb-2">Female Patients</h6>
+                        <h2 class="mb-0">{{ female_count|default(0) }}</h2>
+                    </div>
+                    <i class="fas fa-female fa-3x opacity-50"></i>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="row">
+    <div class="col-md-6 mb-4">
+        <div class="card">
+            <div class="card-header">
+                <h5 class="mb-0"><i class="fas fa-chart-pie me-2"></i>Statistics</h5>
+            </div>
+            <div class="card-body">
+                <table class="table">
+                    <tbody>
+                        <tr>
+                            <td><strong>Total Patients:</strong></td>
+                            <td>{{ total_patients|default(0) }}</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Stroke Cases:</strong></td>
+                            <td>{{ stroke_patients|default(0) }}</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Average Age:</strong></td>
+                            <td>{{ average_age|default(0) }} years</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Male Patients:</strong></td>
+                            <td>{{ male_count|default(0) }}</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Female Patients:</strong></td>
+                            <td>{{ female_count|default(0) }}</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+
+    <div class="col-md-6 mb-4">
+        <div class="card">
+            <div class="card-header">
+                <h5 class="mb-0"><i class="fas fa-bolt me-2"></i>Quick Actions</h5>
+            </div>
+            <div class="card-body">
+                <div class="d-grid gap-2">
+                    <a href="{{ url_for('patients.add_patient') }}" class="btn btn-primary">
+                        <i class="fas fa-plus me-2"></i>Add New Patient
+                    </a>
+                    <a href="{{ url_for('patients.list_patients') }}" class="btn btn-outline-primary">
+                        <i class="fas fa-list me-2"></i>View All Patients
+                    </a>
+                    <a href="{{ url_for('patients.import_data') }}" class="btn btn-outline-primary">
+                        <i class="fas fa-file-upload me-2"></i>Import CSV Data
+                    </a>
+                    <a href="{{ url_for('patients.search') }}?q=" class="btn btn-outline-primary">
+                        <i class="fas fa-search me-2"></i>Search Patients
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
+
