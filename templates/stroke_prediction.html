@@ -1,0 +1,308 @@
+{% extends "base.html" %}
+
+{% block title %}Stroke Risk Assessment - Stroke Prediction System{% endblock %}
+
+{% block content %}
+<div class="container-fluid py-4">
+    <div class="row">
+        <div class="col-lg-6">
+            <div class="card border-0 shadow h-100">
+                <div class="card-header bg-primary text-white py-3">
+                    <h5 class="mb-0"><i class="fas fa-clipboard-list me-2"></i>Health Information Form</h5>
+                </div>
+                <div class="card-body p-4">
+                    <form method="POST" action="{{ url_for('patients.stroke_prediction') }}" class="needs-validation" novalidate>
+                        <div class="row g-3">
+
+                            <div class="col-12 mb-2">
+                                <small class="text-muted fw-bold"><i class="fas fa-user me-1"></i>Personal Information</small>
+                            </div>
+                            
+                            <div class="col-md-6">
+                                <label class="form-label fw-medium">Gender</label>
+                                <select name="gender" class="form-select" required>
+                                    <option value="" selected disabled>Select</option>
+                                    <option value="Male">Male</option>
+                                    <option value="Female">Female</option>
+                                </select>
+                                <small class="form-text text-muted">Biological gender</small>
+                            </div>
+                            
+                            <div class="col-md-6">
+                                <label class="form-label fw-medium">Age</label>
+                                <input type="number" name="age" class="form-control" placeholder="Age" min="0" max="120" required>
+                                <small class="form-text text-muted">Years</small>
+                            </div>
+                            
+                            <div class="col-12 mt-3 mb-2">
+                                <small class="text-muted fw-bold"><i class="fas fa-stethoscope me-1"></i>Medical Conditions</small>
+                            </div>
+                            
+                            <div class="col-md-6">
+                                <label class="form-label fw-medium">Hypertension</label>
+                                <select name="hypertension" class="form-select" required>
+                                    <option value="" selected disabled>Select</option>
+                                    <option value="0">No</option>
+                                    <option value="1">Yes</option>
+                                </select>
+                                <small class="form-text text-muted">High blood pressure</small>
+                            </div>
+                            
+                            <div class="col-md-6">
+                                <label class="form-label fw-medium">Heart Disease</label>
+                                <select name="heart_disease" class="form-select" required>
+                                    <option value="" selected disabled>Select</option>
+                                    <option value="0">No</option>
+                                    <option value="1">Yes</option>
+                                </select>
+                                <small class="form-text text-muted">Heart condition history</small>
+                            </div>
+                            
+                            <div class="col-12 mt-3 mb-2">
+                                <small class="text-muted fw-bold"><i class="fas fa-running me-1"></i>Lifestyle & Body Metrics</small>
+                            </div>
+                            
+                            <div class="col-md-6">
+                                <label class="form-label fw-medium">Work Type</label>
+                                <select name="work_type" class="form-select" required>
+                                    <option value="" selected disabled>Select</option>
+                                    <option value="Private">Private</option>
+                                    <option value="Self-employed">Self-employed</option>
+                                    <option value="Govt_job">Government</option>
+                                    <option value="children">Student/Child</option>
+                                    <option value="Never_worked">Never Worked</option>
+                                </select>
+                                <small class="form-text text-muted">Occupation</small>
+                            </div>
+                            
+                            <div class="col-md-6">
+                                <label class="form-label fw-medium">BMI</label>
+                                <input type="number" step="0.1" name="bmi" class="form-control" placeholder="e.g., 24.5" min="10" max="70" required>
+                                <small class="form-text text-muted">kg/m²</small>
+                            </div>
+                            
+                            <div class="col-12">
+                                <label class="form-label fw-medium">Smoking Status</label>
+                                <select name="smoking_status" class="form-select" required>
+                                    <option value="" selected disabled>Select</option>
+                                    <option value="never">Never</option>
+                                    <option value="formerly">Former</option>
+                                    <option value="smokes">Current</option>
+                                </select>
+                                <small class="form-text text-muted">Tobacco usage</small>
+                            </div>
+                        </div>
+                        
+                        <div class="text-center mt-4 pt-2">
+                            <button type="submit" class="btn btn-primary btn-lg px-4 py-2">
+                                <i class="fas fa-heartbeat me-2"></i> 
+                                <span>Assess Risk</span>
+                            </button>
+                            <p class="text-muted mt-2 mb-0">
+                                <small><i class="fas fa-shield-alt me-1"></i> Secure & anonymous</small>
+                            </p>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+        
+        <div class="col-lg-6 mt-4 mt-lg-0">
+            <div class="card border-0 shadow h-100">
+                <div class="card-header bg-gradient-{% if prediction and 'High' in prediction %}danger{% else %}info{% endif %} text-white py-3">
+                    <h5 class="mb-0"><i class="fas fa-chart-line me-2"></i>Assessment Results</h5>
+                </div>
+                <div class="card-body p-4">
+                    {% if prediction %}
+                    <div class="text-center mb-4">
+                        <div class="risk-indicator mx-auto mb-3">
+                            <i class="fas fa-{% if 'High' in prediction %}exclamation-triangle text-danger{% else %}check-circle text-success{% endif %} fa-4x"></i>
+                        </div>
+                        <h3 class="mb-2 {% if 'High' in prediction %}text-danger{% else %}text-success{% endif %}">
+                            {{ prediction.split('(')[0]|trim }}
+                        </h3>
+                        <p class="lead mb-4">{{ prediction }}</p>
+                        
+                        {% set prob = prediction.split('(')[1].split('%')[0]|float %}
+                        <div class="mb-4">
+                            <div class="d-flex justify-content-between mb-1">
+                                <small>Risk Level</small>
+                                <small><strong>{{ prob }}%</strong></small>
+                            </div>
+                            <div class="progress" style="height: 20px;">
+                                <div class="progress-bar {% if 'High' in prediction %}bg-danger{% else %}bg-success{% endif %}" 
+                                     style=`width: {{ prob }}%` role="progressbar">
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div class="alert alert-{% if 'High' in prediction %}danger{% else %}success{% endif %}">
+                            <div class="d-flex">
+                                <i class="fas fa-lightbulb me-2 mt-1"></i>
+                                <div>
+                                    <strong>Recommendation:</strong>
+                                    {% if 'High' in prediction %}
+                                    Consult a healthcare professional for personalized advice.
+                                    {% else %}
+                                    Maintain healthy lifestyle with regular check-ups.
+                                    {% endif %}
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="border-top pt-3">
+                        <h6 class="fw-bold mb-3"><i class="fas fa-list-check me-2"></i>Risk Factors Summary</h6>
+                        <div class="row">
+                            <div class="col-6 mb-2">
+                                <div class="d-flex align-items-center">
+                                    <i class="fas fa-circle text-{% if 'High' in prediction %}danger{% else %}success{% endif %} me-2 fa-xs"></i>
+                                    <small>Stroke Probability</small>
+                                </div>
+                            </div>
+                            <div class="col-6 text-end mb-2">
+                                <strong>{{ prob }}%</strong>
+                            </div>
+                            
+                            <div class="col-6 mb-2">
+                                <div class="d-flex align-items-center">
+                                    <i class="fas fa-circle text-{% if 'High' in prediction %}danger{% else %}success{% endif %} me-2 fa-xs"></i>
+                                    <small>Risk Category</small>
+                                </div>
+                            </div>
+                            <div class="col-6 text-end mb-2">
+                                <strong>{% if 'High' in prediction %}High{% else %}Low{% endif %}</strong>
+                            </div>
+                            
+                            <div class="col-6 mb-2">
+                                
+                            </div>
+                            
+                        </div>
+                    </div>
+                    
+                    {% else %}
+                    <div class="text-center py-5">
+                        <div class="empty-state-icon mb-3">
+                            <i class="fas fa-chart-pie fa-4x text-muted"></i>
+                        </div>
+                        <h5 class="text-muted mb-3">No Assessment Yet</h5>
+                        <p class="text-muted mb-0">
+                            Fill out the health information form on the left and click "Assess Risk" to see your personalized stroke risk assessment.
+                        </p>
+                        <div class="mt-4">
+                            <i class="fas fa-arrow-left text-primary me-2"></i>
+                            <small class="text-primary">Complete the form to begin</small>
+                        </div>
+                    </div>
+                    {% endif %}
+                    
+                    <div class="border-top mt-3 pt-3">
+                        <div class="row text-center">
+                            <div class="col-4">
+                                <i class="fas fa-notes-medical text-primary mb-2"></i>
+                                <p class="small text-muted mb-0">Informational Only</p>
+                            </div>
+                            <div class="col-4">
+                                <i class="fas fa-user-md text-primary mb-2"></i>
+                                <p class="small text-muted mb-0">Consult Doctor</p>
+                            </div>
+                            <div class="col-4">
+                                <i class="fas fa-redo text-primary mb-2"></i>
+                                <p class="small text-muted mb-0">Reassess Regularly</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<style>
+.card {
+    border-radius: 12px;
+    overflow: hidden;
+}
+
+.card-header {
+    border-bottom: none;
+}
+
+.bg-gradient-danger {
+    background: linear-gradient(135deg, #f5576c 0%, #f093fb 100%);
+}
+
+.bg-gradient-success {
+    background: linear-gradient(135deg, #4facfe 0%, #00f2fe 100%);
+}
+
+.bg-gradient-info {
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+}
+
+.risk-indicator {
+    width: 100px;
+    height: 100px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: linear-gradient(135deg, rgba(0,0,0,0.03) 0%, rgba(0,0,0,0.06) 100%);
+}
+
+.progress {
+    border-radius: 10px;
+    overflow: hidden;
+}
+
+.progress-bar {
+    border-radius: 10px;
+}
+
+.form-select, .form-control {
+    border-radius: 8px;
+    border: 1px solid #dee2e6;
+    transition: all 0.2s;
+}
+
+.form-select:focus, .form-control:focus {
+    border-color: #667eea;
+    box-shadow: 0 0 0 0.2rem rgba(102, 126, 234, 0.25);
+}
+
+.empty-state-icon {
+    opacity: 0.5;
+}
+
+.btn-primary {
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    border: none;
+    border-radius: 8px;
+    padding: 10px 24px;
+    transition: all 0.3s;
+}
+
+.btn-primary:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 5px 15px rgba(102, 126, 234, 0.3);
+}
+</style>
+
+<script>
+// Form validation
+(function () {
+    'use strict'
+    var forms = document.querySelectorAll('.needs-validation')
+    Array.prototype.slice.call(forms).forEach(function (form) {
+        form.addEventListener('submit', function (event) {
+            if (!form.checkValidity()) {
+                event.preventDefault()
+                event.stopPropagation()
+            }
+            form.classList.add('was-validated')
+        }, false)
+    })
+})()
+</script>
+{% endblock %}

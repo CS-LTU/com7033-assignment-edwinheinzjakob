@@ -1,9 +1,9 @@
 """
 Dashboard blueprint
 """
-
 from flask import Blueprint
 
-dashboard_bp = Blueprint("dashboard", __name__)
+dashboard_bp = Blueprint('dashboard', __name__)
 
-from app.blueprints.dashboard import routes  # noqa: F401,E402
+from app.blueprints.dashboard import routes
+

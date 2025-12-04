@@ -1,9 +1,9 @@
 """
 Patients blueprint
 """
-
 from flask import Blueprint
 
-patients_bp = Blueprint("patients", __name__)
+patients_bp = Blueprint('patients', __name__)
 
-from app.blueprints.patients import routes  # noqa: F401,E402
+from app.blueprints.patients import routes
+
